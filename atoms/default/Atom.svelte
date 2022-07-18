@@ -7,7 +7,5 @@
 </div>
 
 <style lang="scss">
-	:global {
-		@import "styles/atom-defaults.scss";
-	}
+	@import "styles/atom-defaults.scss";
 </style>
