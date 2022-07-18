@@ -11,15 +11,16 @@ const buildPath = path.resolve('build')
 const assetsPath = path.resolve('assets')
 
 export default async function build({production}) {
-    const {options, warnings} = await loadConfigFile(path.resolve('rollup.config.js'));
-
-    // This prints all deferred warnings
-    warnings.flush();
-
     const atomDirectories = await listDirectories(atomsPath)
 
-    let optionsObj = options[0]
-    let buildOptionsList = atomDirectories.map(atomDirectory => {
+    let buildOptionsList = await Promise.all(atomDirectories.map(async (atomDirectory) => {
+
+        const {options, warnings} = await loadConfigFile(path.resolve('rollup.config.js'));
+        
+        // This prints all deferred warnings
+        warnings.flush();
+
+        let optionsObj = options[0]
 
         const atomName = atomDirectory.charAt(0).toUpperCase() + atomDirectory.slice(1)
         return {
@@ -31,7 +32,7 @@ export default async function build({production}) {
                 name: 'atom' + atomName,
             }
         }
-    })
+    }));
 
     if (!production) {
         const watcher = rollup.watch(buildOptionsList);
@@ -46,15 +47,16 @@ export default async function build({production}) {
                 result.close();
             }
         });
-    }
-
-    for (let buildOptions of buildOptionsList) {
-        const bundle = await rollup.rollup(buildOptions);
-        await bundle.write(buildOptions.output);
+    } else {
+        for (let buildOptions of buildOptionsList) {
+            const bundle = await rollup.rollup(buildOptions);
+            await bundle.write(buildOptions.output);
+            await bundle.close();
+        }
     }
 
     // copy assets folder to build folder
-    copyAssets(assetsPath, buildPath)
+    copyAssets(assetsPath, buildPath);
 
     if (!production) {
         chokidar.watch(assetsPath, {
