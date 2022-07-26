@@ -81,6 +81,11 @@ async function upload(body, key, params = {}) {
         ACL: 'public-read',
         CacheControl: 'max-age=31536000'
     }
+
+    // Fix for SVG content-type issue: https://craftcms.stackexchange.com/questions/17752/incorrect-content-mime-type-on-s3-svg-upload
+    if (path.extname(key) === '.svg') {
+        defaultParams.ContentType = 'image/svg+xml';
+    }
     
     let uploadParams = {
         ...defaultParams,
