@@ -3,14 +3,20 @@ import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
 import livereload from 'rollup-plugin-livereload';
 import { terser } from 'rollup-plugin-terser';
+import { babel } from '@rollup/plugin-babel';
 import css from 'rollup-plugin-css-only';
+import { string } from "rollup-plugin-string";
 import testharness from './scripts/generateTestHarness.js';
 import sveltePreprocess from 'svelte-preprocess';
 import strip from '@rollup/plugin-strip';
 import replace from '@rollup/plugin-replace';
+import json from '@rollup/plugin-json';
+import alias from '@rollup/plugin-alias';
+import nodePolyfills from 'rollup-plugin-polyfill-node';
+import path from 'path';
 
 const production = !process.env.ROLLUP_WATCH;
-const assetsPath = process.env.ATOM_ASSETS_PATH || 'assets';
+const assetsPath = process.env.ATOM_ASSETS_PATH || '/assets';
 
 export default {
 	output: {
@@ -18,8 +24,21 @@ export default {
 		format: 'iife',
 	},
 	plugins: [
+		nodePolyfills(),
+
 		replace({
 			__assetsPath__: assetsPath,
+			__production__: `${production}`,
+		}),
+
+		alias({
+			entries: [
+			  { find: 'shared', replacement: path.resolve(__dirname, 'shared') },
+			]
+		}),
+
+		string({
+			include: "**/*.html",
 		}),
 
 		svelte({
@@ -38,6 +57,10 @@ export default {
 				dev: !production
 			},
 		}),
+
+		// Allow JSON files to be imported as JS modules
+		json(),
+
 		// we'll extract any component CSS out into
 		// a separate file - better for performance
 		css({ output: 'bundle.css' }),
@@ -52,6 +75,30 @@ export default {
 			dedupe: ['svelte']
 		}),
 		commonjs(),
+
+		// Transpile JS for support on older browsers
+		production && babel({
+			extensions: [".js", ".mjs", ".html", ".svelte"],
+			babelHelpers: 'bundled',
+			exclude: [
+				// don't transpile dev dependencies
+				'node_modules/@babel/**', 
+				'node_modules/@rollup/**', 
+				'node_modules/aws-sdk/**', 
+				'node_modules/node-fetch/**', 
+				'node_modules/ora/**'],
+			presets: [
+				[
+				  "@babel/preset-env",
+				  {
+					targets: "> 0.25%, not dead",
+					useBuiltIns: "usage",
+					corejs: "3",
+					// debug: true,
+				  },
+				]
+			],
+		}),
 
 		// Remove debugger statements and functions like assert.equal and console.log.
 		production && strip(),
