@@ -32,9 +32,9 @@ run().catch(error => {
 });
 
 async function run() {
-    spinner.start('Generating bundle')
+    spinner.start('Generating bundle(s)')
     await build({production: true});
-    spinner.succeed('Bundle generated')
+    spinner.succeed('Bundle(s) generated')
     await deploy();
 }
 
@@ -82,9 +82,21 @@ async function upload(body, key, params = {}) {
         CacheControl: 'max-age=31536000'
     }
 
+    // TODO: Determine content-type from file extension in a generic way
+
     // Fix for SVG content-type issue: https://craftcms.stackexchange.com/questions/17752/incorrect-content-mime-type-on-s3-svg-upload
     if (path.extname(key) === '.svg') {
         defaultParams.ContentType = 'image/svg+xml';
+    }
+
+    // Fix for PNG issue (see SVG)
+    if (path.extname(key) === '.png') {
+        defaultParams.ContentType = 'image/png';
+    }
+
+    // Fix for JSON issue (see SVG)
+    if (path.extname(key) === '.json') {
+        defaultParams.ContentType = 'application/json';
     }
     
     let uploadParams = {
@@ -109,29 +121,45 @@ function filesToDeploy(atomName) {
     const keyForFile = (fileName) => {
         return path.join(s3Path, atomName, fileName)
     }
+
+    // TODO: create main.js in project structure
+    const mainJS = `
+        var el = document.createElement('script');
+        el.src = '${cdnUrl}/${s3Path}/${atomName}/${version}/app.js';
+        document.body.appendChild(el);
+    `;
     
     return [{
         path: pathForFile('bundle.js'),
+        key: versionedKeyForFile('app.js')
+    }, 
+    {
+        body: mainJS,
         key: versionedKeyForFile('main.js')
-    }, {
+    },
+    {
         path: pathForFile('bundle.css'),
         key: versionedKeyForFile('main.css')
-    }, {
+    }, 
+    {
         body: '<div id="gv-atom"></div>',
         key: versionedKeyForFile('main.html')
-    }, {
+    }, 
+    {
         body: version,
         key: keyForFile('preview'),
         params: {
             CacheControl: 'max-age=30'
         },
-    },{
+    },
+    {
         body: version,
         key: keyForFile('live'),
         params: {
             CacheControl: 'max-age=30'
         },
-    }, {
+    }, 
+    {
         body: JSON.stringify(config),
         key: keyForFile('config.json'),
         params: {
