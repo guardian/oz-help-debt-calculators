@@ -12,6 +12,7 @@
     "start": "sirv build --no-clear"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.20.2",
     "@rollup/plugin-alias": "^4.0.2",
     "@rollup/plugin-babel": "^6.0.3",
     "@rollup/plugin-commonjs": "^17.0.0",
@@ -21,7 +22,9 @@
     "@rollup/plugin-replace": "^4.0.0",
     "@rollup/plugin-strip": "^2.1.0",
     "autoprefixer": "^10.4.7",
+    "aws-sdk": "^2.1272.0",
     "lodash": "^4.17.21",
+    "ora": "^6.1.2",
     "postcss": "^8.4.13",
     "rollup": "^2.3.4",
     "rollup-plugin-css-only": "^3.1.0",
