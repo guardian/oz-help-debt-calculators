@@ -4,6 +4,7 @@ import {listDirectories, listFiles} from './lib/fileSystem.js';
 import path from 'path';
 import ora from 'ora';
 import fs from 'fs';
+import { lookup } from 'mime-types';
 import build from './lib/build.js';
 
 const version = `v/${Date.now()}`;
@@ -79,24 +80,12 @@ async function upload(body, key, params = {}) {
     let defaultParams = {
         Bucket: bucketName,
         ACL: 'public-read',
-        CacheControl: 'max-age=31536000'
+        CacheControl: 'max-age=31536000',
     }
 
-    // TODO: Determine content-type from file extension in a generic way
-
-    // Fix for SVG content-type issue: https://craftcms.stackexchange.com/questions/17752/incorrect-content-mime-type-on-s3-svg-upload
-    if (path.extname(key) === '.svg') {
-        defaultParams.ContentType = 'image/svg+xml';
-    }
-
-    // Fix for PNG issue (see SVG)
-    if (path.extname(key) === '.png') {
-        defaultParams.ContentType = 'image/png';
-    }
-
-    // Fix for JSON issue (see SVG)
-    if (path.extname(key) === '.json') {
-        defaultParams.ContentType = 'application/json';
+    const explicitContentType = lookup(key);
+    if (explicitContentType) {
+        defaultParams.ContentType = explicitContentType;
     }
     
     let uploadParams = {
