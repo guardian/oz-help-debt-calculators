@@ -10,7 +10,7 @@
 </script>
 
 <div class="atom">
-	<h1>Welcome to the Atom template. Start creating your project in Atom.svelte</h1>
+	<h1>Welcome to the Atom template. Start creating your project in Atom.svelte.</h1>
 
 	<p>Count: {count}</p>
 

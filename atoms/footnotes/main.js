@@ -1,3 +1,4 @@
+import './styles/main.scss';
 import Atom from './Atom.svelte';
 
 const app = new Atom({

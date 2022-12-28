@@ -1,3 +1,9 @@
+@import "shared/styles/mq.scss";
+
+h1 {
+  color: deeppink;
+}
+
 :global(.content__main-column--interactive) {
   @include mq(leftCol) {
       margin-left: 160px;
