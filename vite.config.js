@@ -10,17 +10,21 @@ export default defineConfig({
     },
   },
   plugins: [svelte()],
-  root: "atoms/default",
+  root: path.resolve(__dirname, "atoms"),
   build: {
+    lib: {
+        entry: path.resolve(__dirname, 'atoms/default/main.js'),
+        name: 'atom',
+        formats: ['iife'],
+        fileName: (format) => 'main.js',
+    },
     target: "es2015",
     emptyOutDir: true,
     rollupOptions: {
+        input: path.resolve(__dirname, 'atoms/default/main.js'),
         output: {
-            sourcemap: false,
-            format: 'iife',
-            dir: path.resolve(__dirname, 'build'),
-            // file: path.join(path.resolve(__dirname, 'build'), 'bundle.js'),
-            // name: 'default'
+            sourcemap: true,
+            dir: path.resolve(__dirname, 'build/default'),
         },
     }
   }
