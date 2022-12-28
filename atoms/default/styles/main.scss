@@ -1,5 +1,7 @@
+@import "shared/styles/mq.scss";
+
 h1 {
-  color: green;
+  color: deeppink;
 }
 
 :global(.content__main-column--interactive) {

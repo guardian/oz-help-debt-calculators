@@ -22,5 +22,15 @@
 <Shared></Shared>
 
 <style lang="scss">
-	@import "styles/atom-defaults.scss";
+	.atom {
+		h1 {
+			@include f-headline();
+			font-size: 30px;
+			font-weight: bold;
+
+			@include mq($until: tablet) {
+				font-size: 20px;
+			}
+		}
+	}
 </style>
