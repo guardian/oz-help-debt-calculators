@@ -6,11 +6,11 @@
   "scripts": {
     "build": "vite build",
     "dev": "vite",
-    "preview": "vite preview",
+    "preview": "node scripts/preview.js",
     "deploy": "node scripts/deploy.js",
     "deploylog": "node scripts/deploylog.js",
     "deploylog:preview": "node scripts/deploylog.js --preview",
-    "start": "sirv build --no-clear"
+    "start": "sirv build/default --no-clear"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.20.2",

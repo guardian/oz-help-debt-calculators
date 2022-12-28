@@ -1,6 +1,8 @@
 import { defineConfig } from "vite";
 import { svelte } from "@sveltejs/vite-plugin-svelte";
+import sveltePreprocess from 'svelte-preprocess';
 import path from 'path';
+import autoprefixer from 'autoprefixer'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -9,7 +11,22 @@ export default defineConfig({
       "shared": path.resolve(__dirname, "./shared"),
     },
   },
-  plugins: [svelte()],
+  css: {
+    postcss: {
+      plugins: [
+        autoprefixer()
+      ],
+    }
+  },
+  plugins: [svelte({
+    preprocess: sveltePreprocess({
+        sourceMap: false,
+        scss: {
+            includePaths: ['shared/styles'],
+            prependData: '@import "mq.scss"; @import "fonts.scss";',
+        },
+     }),
+  })],
   root: path.resolve(__dirname, "atoms"),
   build: {
     lib: {

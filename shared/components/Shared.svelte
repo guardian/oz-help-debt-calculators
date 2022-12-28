@@ -1,0 +1,1 @@
+<h3>Shared component</h3>
