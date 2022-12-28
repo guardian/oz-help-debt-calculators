@@ -5,8 +5,6 @@ import autoprefixer from "autoprefixer";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
-    console.log('build with mode', mode);
-
   return {
     resolve: {
       alias: {

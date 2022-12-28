@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "vite build",
+    "build": "node scripts/build.js",
     "dev": "vite",
     "preview": "node scripts/preview.js",
     "deploy": "node scripts/deploy.js",
