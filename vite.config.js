@@ -14,6 +14,7 @@ export default defineConfig({
     postcss: {
       plugins: [autoprefixer()],
     },
+    devSourcemap: true,
   },
   plugins: [
     svelte({
@@ -22,6 +23,7 @@ export default defineConfig({
   ],
   root: path.resolve(__dirname, "atoms"),
   build: {
+    sourcemap: true,
     lib: {
       entry: path.resolve(__dirname, "atoms/default/main.js"),
       name: "atom",
@@ -33,7 +35,6 @@ export default defineConfig({
     rollupOptions: {
       input: path.resolve(__dirname, "atoms/default/main.js"),
       output: {
-        sourcemap: true,
         dir: path.resolve(__dirname, "build/default"),
       },
     },
