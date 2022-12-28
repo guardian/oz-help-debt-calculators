@@ -4,8 +4,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "node scripts/build.js",
-    "dev": "node scripts/build.js --watch",
+    "build": "vite build",
+    "dev": "vite",
+    "preview": "vite preview",
     "deploy": "node scripts/deploy.js",
     "deploylog": "node scripts/deploylog.js",
     "deploylog:preview": "node scripts/deploylog.js --preview",
@@ -21,6 +22,7 @@
     "@rollup/plugin-node-resolve": "^11.0.0",
     "@rollup/plugin-replace": "^4.0.0",
     "@rollup/plugin-strip": "^2.1.0",
+    "@sveltejs/vite-plugin-svelte": "^2.0.2",
     "autoprefixer": "^10.4.7",
     "aws-sdk": "^2.1272.0",
     "lodash": "^4.17.21",
@@ -37,7 +39,8 @@
     "sass": "^1.51.0",
     "sass-mq": "^6.0.0",
     "svelte": "^3.0.0",
-    "svelte-preprocess": "^4.10.6"
+    "svelte-preprocess": "^4.10.6",
+    "vite": "^4.0.3"
   },
   "dependencies": {
     "sirv-cli": "^2.0.0"
