@@ -26,7 +26,7 @@
       }
 }
 
- // there is no element-inline class on interactive atoms so targeting element-atom as default for inline weighting instead
+ /* there is no element-inline class on interactive atoms so targeting element-atom as default for inline weighting instead */
 :global(.content__main-column--interactive .element-atom) {
   max-width: 620px;
 
@@ -69,7 +69,7 @@
   }
 }
 
-// this fixes the top/bottom margin gap with the left ruler
+/* this fixes the top/bottom margin gap with the left ruler */
 :global(.content__main-column--interactive .element-atom) { 
   margin-top: 0px;
   margin-bottom: 0px;
@@ -82,7 +82,7 @@
   max-width: 620px;
 }
 
-// this sets the correct top margin if there is a p before the element-atom
+/* this sets the correct top margin if there is a p before the element-atom */
 :global(p+.element-atom) { 
   padding-top: 0;
   padding-bottom: 0;
