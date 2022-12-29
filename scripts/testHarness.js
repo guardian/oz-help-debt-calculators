@@ -33,7 +33,7 @@ export function testHarness(options = {}) {
 
         async load(id) {
             if (id === '/') {
-                return readFile('./harness/_index.html', 'utf8');
+                return readFile('./harness/index.html', 'utf8');
             } else if (id.startsWith('/atoms/')) {
                 return readFile('./harness/dcr-interactive__immersive.html', 'utf8');
             }
