@@ -63,7 +63,7 @@ export function testHarness(options = {}) {
                     paragraphStyle: config.placeholders.paragraphBefore ? 'display: block;' : 'display: none;',
                     paragraphBefore: config.placeholders.paragraphBefore,
                     html: config.html,
-                    js: path.join(root, atom, 'main.js'),
+                    js: path.join(root, atom, 'app.js'),
                 })
             }
 
