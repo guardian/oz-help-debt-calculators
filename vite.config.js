@@ -1,5 +1,6 @@
 import { defineConfig } from "vite";
 import { svelte } from "@sveltejs/vite-plugin-svelte";
+import Inspect from 'vite-plugin-inspect'
 import path from "path";
 import autoprefixer from "autoprefixer";
 
@@ -21,6 +22,7 @@ export default defineConfig(({ mode }) => {
       svelte({
         configFile: path.resolve(__dirname, "svelte.config.js"),
       }),
+      Inspect(),
     ],
     root: path.resolve(__dirname, "atoms"),
     build: {
