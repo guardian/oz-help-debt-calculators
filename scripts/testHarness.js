@@ -53,7 +53,7 @@ export function testHarness(options = {}) {
                 return _.template(code)({
                     atoms: atomDirectories,
                 });
-            } else if (id.match(/^\/atoms\/[^\/]+\/[^\/]+\/$/m)) {
+            } else if (id.match(/^\/atoms\/[^\/]+\/[^\/]+\/$/)) {
                 const atom = resolveAtom(id);
 
                 return _.template(code)({
