@@ -3,6 +3,7 @@ import { svelte } from "@sveltejs/vite-plugin-svelte";
 import Inspect from 'vite-plugin-inspect'
 import path from "path";
 import autoprefixer from "autoprefixer";
+import { viteStaticCopy } from 'vite-plugin-static-copy'
 import { testHarness } from "./scripts/testHarness.js";
 
 // https://vitejs.dev/config/
@@ -24,6 +25,14 @@ export default defineConfig(({ mode }) => {
         configFile: path.resolve(__dirname, "svelte.config.js"),
       }),
       testHarness(),
+      viteStaticCopy({
+        targets: [
+          {
+            src: path.resolve(__dirname, `src/atoms/${mode}/main.html`),
+            dest: path.resolve(__dirname, `build/${mode}`)
+          }
+        ]
+      }),
       Inspect(),
     ],
     root: path.resolve(__dirname, "src/atoms"),

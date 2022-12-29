@@ -60,7 +60,6 @@ export function testHarness(options = {}) {
                 });
             } else if (id.match(/^\/atoms\/[^\/]+\/[^\/]+\/$/)) {
                 const atom = resolveAtom(id);
-
                 const mainHTML = await readFile(path.join(root, atom, 'main.html'), 'utf8');
 
                 return _.template(code)({

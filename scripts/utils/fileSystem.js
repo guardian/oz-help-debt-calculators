@@ -7,12 +7,12 @@ export async function listDirectories(path) {
 }
 
 export async function listFiles(dirPath, params = {}) {
-    const files = await fsPromises.readdir(dirPath);
+    const files = await readdir(dirPath, { withFileTypes: true });
     let output = []
   
     for (let file of files) {
-        let filePath = path.join(dirPath, file);
-        if (isDirectory(filePath)) {
+        let filePath = path.join(dirPath, file.name);
+        if (file.isDirectory()) {
             let subFiles = await listFiles(filePath);
             output = [...output, ...subFiles];
         } else {
@@ -30,5 +30,6 @@ export async function listFiles(dirPath, params = {}) {
 }
 
 function isDirectory(path) {
-    return lstatSync(path).isDirectory();
+    return true;
+    // return lstatSync(path).isDirectory();
 }

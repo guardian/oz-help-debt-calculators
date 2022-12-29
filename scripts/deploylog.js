@@ -1,7 +1,7 @@
 import AWS from 'aws-sdk';
 import path from 'path';
 import config from '../project.config.js';
-import { listDirectories } from './lib/fileSystem.js';
+import { listDirectories } from './utils/fileSystem.js';
 
 const s3 = new AWS.S3();
 const bucketName = 'gdn-cdn';
@@ -14,7 +14,7 @@ const logFileName = preview ? 'preview.log' : 'live.log';
 getLogs()
 
 async function getLogs() {
-    const atoms = await listDirectories(path.resolve('atoms'));
+    const atoms = await listDirectories(path.resolve('src/atoms'));
     for (let atom of atoms) {
         const logPath = path.join('atoms', config.path, atom, logFileName)
         const log = await getObject(bucketName, logPath)

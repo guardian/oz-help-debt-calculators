@@ -9,7 +9,7 @@ import { lookup } from 'mime-types';
 const version = `v/${Date.now()}`;
 const s3Path = `atoms/${config.path}`;
 const buildPath = path.resolve('build');
-const atomsPath = path.resolve('atoms');
+const atomsPath = path.resolve('src/atoms');
 
 const spinner = ora()
 
@@ -123,8 +123,7 @@ function filesToDeploy(atomName) {
         key: versionedKeyForFile('main.css')
     }, 
     {
-        // FIXME: this should be grabbed from build dir
-        body: '<div id="gv-atom"></div>',
+        path: pathForFile('main.html'),
         key: versionedKeyForFile('main.html')
     },
     {
