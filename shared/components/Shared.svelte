@@ -1,1 +1,1 @@
-<h3>Shared component</h3>
+<h3>Shared component. Yes</h3>

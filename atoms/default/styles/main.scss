@@ -1,10 +1,6 @@
 @import "shared/styles/mq.scss";
 
-h1 {
-  color: deeppink;
-}
-
-:global(.content__main-column--interactive) {
+.content__main-column--interactive {
   @include mq(leftCol) {
       margin-left: 160px;
   }
@@ -14,7 +10,7 @@ h1 {
   }
 }
 
-:global(.content__main-column--interactive:before) {
+.content__main-column--interactive:before {
       position: absolute;
       top: 0px;
       height: calc(100% + 15px);
@@ -33,7 +29,7 @@ h1 {
 }
 
  /* there is no element-inline class on interactive atoms so targeting element-atom as default for inline weighting instead */
-:global(.content__main-column--interactive .element-atom) {
+.content__main-column--interactive .element-atom {
   max-width: 620px;
 
   @include mq($until: tablet) {
@@ -41,7 +37,7 @@ h1 {
   }
 }
 
-:global(.content__main-column--interactive .element-showcase) {
+.content__main-column--interactive .element-showcase {
   margin-left: 0px;
 
   @include mq(tablet) {
@@ -53,7 +49,7 @@ h1 {
   }
 }
 
-:global(.content__main-column--interactive .element-immersive) {
+.content__main-column--interactive .element-immersive {
   max-width: 1100px;
   
   @include mq($until: tablet) {
@@ -76,20 +72,20 @@ h1 {
 }
 
 /* this fixes the top/bottom margin gap with the left ruler */
-:global(.content__main-column--interactive .element-atom) { 
+.content__main-column--interactive .element-atom { 
   margin-top: 0px;
   margin-bottom: 0px;
   padding-bottom: 12px;
   padding-top: 12px;
 }
 
-:global(.content__main-column--interactive p) {
+.content__main-column--interactive p {
   color: #121212;
   max-width: 620px;
 }
 
 /* this sets the correct top margin if there is a p before the element-atom */
-:global(p+.element-atom) { 
+p+.element-atom { 
   padding-top: 0;
   padding-bottom: 0;
   margin-top: 12px;

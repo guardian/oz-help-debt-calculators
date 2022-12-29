@@ -17,12 +17,10 @@
 	<button on:click={increment} >Increment</button>
 </div>
 
-<Component></Component>
-
-<Shared></Shared>
-
 <style lang="scss">
 	.atom {
+		background-color: #CCC;
+
 		h1 {
 			@include f-headline();
 			font-size: 30px;
