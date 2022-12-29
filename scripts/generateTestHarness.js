@@ -2,6 +2,7 @@ import _ from 'lodash';
 import { normalizePath } from 'vite';
 import { readdir, readFile } from 'fs/promises';
 import config from '../project.config.js';
+import { resolve } from 'path';
 
 export function testHarness(options = {}) {
     let root;
@@ -12,35 +13,37 @@ export function testHarness(options = {}) {
         
         configResolved(config) {
             root = config.root;
-            console.log('root', root);
         },
 
         configureServer(server) {
-            return () => {
-              server.middlewares.use('/', async (req, res, next) => {
+            server.middlewares.use(async (req, res, next) => {
                 const url = decodeURI(req.url);
                 const path = normalizePath(url);
-                console.log('request for url', url);
+                // console.log('request for url', path);
 
                 const pathComponents = path.split('/').slice(1);
+                // console.log('path components', pathComponents);
 
-                console.log('path components', pathComponents);
-
-                if (path === '/index.html') {
+                if (path === '/') {
                     let html = await plugin.load(path)
                     const transformed = await plugin.transform(html, path);
                     const result = await server.transformIndexHtml(url, transformed);
                     res.end(result);
-                    next();
+                } else if (pathComponents[0] === 'atoms') {
+                    console.log('requesting atom page');
+                    return next();
                 } else {
                     return next();
                 }
-              })
-            }
+            });
         },
 
+        // resolveId(id) {
+        //     console.log('resolve id', id);
+        // },
+
         async load(id) {
-            if (id === '/index.html') {
+            if (id === '/') {
                 return sourceForIndex(root);
             }
 
@@ -48,7 +51,7 @@ export function testHarness(options = {}) {
         },
 
         async transform(code, id) {
-            if (id === '/index.html') {
+            if (id === '/') {
                 const atomDirectories = await getDirectories(root);
                 return _.template(code)({
                     atoms: atomDirectories,
