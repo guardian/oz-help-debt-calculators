@@ -10,7 +10,7 @@ export default defineConfig(({ mode }) => {
   return {
     resolve: {
       alias: {
-        shared: path.resolve(__dirname, "./shared"),
+        '$lib': path.resolve(__dirname, "src/lib"),
       },
     },
     css: {
@@ -26,11 +26,11 @@ export default defineConfig(({ mode }) => {
       testHarness(),
       Inspect(),
     ],
-    root: path.resolve(__dirname, "atoms"),
+    root: path.resolve(__dirname, "src/atoms"),
     build: {
       sourcemap: true,
       lib: {
-        entry: path.resolve(__dirname, `atoms/${mode}/app.js`),
+        entry: path.resolve(__dirname, `src/atoms/${mode}/app.js`),
         name: "atom",
         formats: ["iife"],
         fileName: (_) => "main.js",
@@ -38,7 +38,7 @@ export default defineConfig(({ mode }) => {
       target: "es2015",
       emptyOutDir: true,
       rollupOptions: {
-        input: path.resolve(__dirname, `atoms/${mode}/app.js`),
+        input: path.resolve(__dirname, `src/atoms/${mode}/app.js`),
         output: {
           dir: path.resolve(__dirname, `build/${mode}`),
         },

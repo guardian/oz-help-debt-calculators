@@ -1,12 +1,12 @@
 import path from 'path'
 import { fileURLToPath } from 'url'
 import { build, loadConfigFromFile } from 'vite'
-import { readdir } from 'fs/promises'
+import { listDirectories } from './utils/fileSystem.js';
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 
 ;(async () => {
-    const atoms = await getDirectories(path.resolve(__dirname, '../atoms'));
+    const atoms = await listDirectories(path.resolve(__dirname, '../src/atoms'));
 
     for (const atomName of atoms) {
         const configEnv = {
@@ -19,8 +19,3 @@ const __dirname = fileURLToPath(new URL('.', import.meta.url));
         await build(configFile.config);
     }
 })()
-
-async function getDirectories(path) {
-    const entries = await readdir(path, { withFileTypes: true })
-    return entries.filter(entry => entry.isDirectory()).map(entry => entry.name);
-}

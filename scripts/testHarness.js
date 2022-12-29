@@ -1,7 +1,8 @@
 import _ from 'lodash';
 import { normalizePath } from 'vite';
-import { readdir, readFile } from 'fs/promises';
+import { readFile } from 'fs/promises';
 import path from 'path';
+import { listDirectories } from './utils/fileSystem.js';
 import config from '../project.config.js';
 
 export function testHarness(options = {}) {
@@ -24,6 +25,10 @@ export function testHarness(options = {}) {
 
                 if (path === '/' || path.startsWith('/atoms/')) {
                     let html = await plugin.load(path)
+                    if (!html) {
+                        console.log('Could not find html for path', path);
+                        return next();
+                    }
                     const transformed = await plugin.transform(html, path);
                     const result = await server.transformIndexHtml(url, transformed);
                     res.end(result);
@@ -49,12 +54,14 @@ export function testHarness(options = {}) {
 
         async transform(code, id) {
             if (id === '/') {
-                const atomDirectories = await getDirectories(root);
+                const atomDirectories = await listDirectories(root);
                 return _.template(code)({
                     atoms: atomDirectories,
                 });
             } else if (id.match(/^\/atoms\/[^\/]+\/[^\/]+\/$/)) {
                 const atom = resolveAtom(id);
+
+                const mainHTML = await readFile(path.join(root, atom, 'main.html'), 'utf8');
 
                 return _.template(code)({
                     title: config.title,
@@ -62,7 +69,7 @@ export function testHarness(options = {}) {
                     standfirst: config.placeholders.standfirst,
                     paragraphStyle: config.placeholders.paragraphBefore ? 'display: block;' : 'display: none;',
                     paragraphBefore: config.placeholders.paragraphBefore,
-                    html: config.html,
+                    html: mainHTML,
                     js: path.join(root, atom, 'app.js'),
                 })
             }
@@ -83,7 +90,3 @@ function resolveAtom(id) {
     return null;
 }
 
-async function getDirectories(path) {
-    const entries = await readdir(path, { withFileTypes: true })
-    return entries.filter(entry => entry.isDirectory()).map(entry => entry.name);
-}

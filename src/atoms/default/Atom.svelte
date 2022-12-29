@@ -1,6 +1,6 @@
 <script>
 	import Component from "./Component.svelte";
-	import Shared from "shared/components/Shared.svelte";
+	import Shared from "$lib/components/Shared.svelte";
 
 	let count = 0;
 

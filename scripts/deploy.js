@@ -1,6 +1,6 @@
 import config from '../project.config.js';
 import AWS from 'aws-sdk';
-import {listDirectories, listFiles} from './lib/fileSystem.js';
+import {listDirectories, listFiles} from './utils/fileSystem.js';
 import path from 'path';
 import ora from 'ora';
 import fs from 'fs';
@@ -123,6 +123,7 @@ function filesToDeploy(atomName) {
         key: versionedKeyForFile('main.css')
     }, 
     {
+        // FIXME: this should be grabbed from build dir
         body: '<div id="gv-atom"></div>',
         key: versionedKeyForFile('main.html')
     },

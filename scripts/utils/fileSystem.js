@@ -1,12 +1,9 @@
-import { promises as fsPromises, lstatSync } from 'fs';
+import { readdir } from 'fs/promises';
 import path from 'path';
 
-export async function listDirectories(srcPath) {
-    let fileList = await fsPromises.readdir(srcPath);
-    
-    return fileList.filter(file => {
-        return isDirectory(path.join(srcPath, file));
-    })
+export async function listDirectories(path) {
+    const entries = await readdir(path, { withFileTypes: true })
+    return entries.filter(entry => entry.isDirectory()).map(entry => entry.name);
 }
 
 export async function listFiles(dirPath, params = {}) {
