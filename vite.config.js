@@ -3,6 +3,7 @@ import { svelte } from "@sveltejs/vite-plugin-svelte";
 import Inspect from 'vite-plugin-inspect'
 import path from "path";
 import autoprefixer from "autoprefixer";
+import { testHarness } from "./scripts/generateTestHarness.js";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
@@ -22,6 +23,7 @@ export default defineConfig(({ mode }) => {
       svelte({
         configFile: path.resolve(__dirname, "svelte.config.js"),
       }),
+      testHarness(),
       Inspect(),
     ],
     root: path.resolve(__dirname, "atoms"),
