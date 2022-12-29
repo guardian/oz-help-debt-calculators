@@ -5,7 +5,6 @@ import path from 'path';
 import ora from 'ora';
 import fs from 'fs';
 import { lookup } from 'mime-types';
-import build from './lib/build.js';
 
 const version = `v/${Date.now()}`;
 const s3Path = `atoms/${config.path}`;
@@ -21,7 +20,7 @@ const cdnUrl = 'https://interactive.guim.co.uk';
 const assetsPath = `${cdnUrl}/${s3Path}/assets/${version}`;
 process.env.ATOM_ASSETS_PATH = assetsPath;
 
-run().catch(error => {
+deploy().catch(error => {
     if (error.name === "InvalidToken") {
         spinner.fail('Your AWS credentials are invalid. Please get a new set of credentials from Janus: https://janus.gutools.co.uk/');
     } else if (error.name === "ExpiredToken") {
@@ -31,13 +30,6 @@ run().catch(error => {
         console.error(error);
     }
 });
-
-async function run() {
-    spinner.start('Generating bundle(s)')
-    await build({production: true});
-    spinner.succeed('Bundle(s) generated')
-    await deploy();
-}
 
 async function deploy() {
     await deployAssets();
@@ -100,7 +92,7 @@ async function upload(body, key, params = {}) {
 
 function filesToDeploy(atomName) {
     const pathForFile = (fileName) => {
-        return path.join(buildPath, 'atoms', atomName, fileName)
+        return path.join(buildPath, atomName, fileName)
     }
     
     const versionedKeyForFile = (fileName) => {
@@ -119,7 +111,7 @@ function filesToDeploy(atomName) {
     `;
     
     return [{
-        path: pathForFile('bundle.js'),
+        path: pathForFile('main.js'),
         key: versionedKeyForFile('app.js')
     }, 
     {
@@ -127,13 +119,13 @@ function filesToDeploy(atomName) {
         key: versionedKeyForFile('main.js')
     },
     {
-        path: pathForFile('bundle.css'),
+        path: pathForFile('style.css'),
         key: versionedKeyForFile('main.css')
     }, 
     {
         body: '<div id="gv-atom"></div>',
         key: versionedKeyForFile('main.html')
-    }, 
+    },
     {
         body: version,
         key: keyForFile('preview'),

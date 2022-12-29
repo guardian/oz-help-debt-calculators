@@ -30,7 +30,7 @@ export default defineConfig(({ mode }) => {
     build: {
       sourcemap: true,
       lib: {
-        entry: path.resolve(__dirname, `atoms/${mode}/main.js`),
+        entry: path.resolve(__dirname, `atoms/${mode}/app.js`),
         name: "atom",
         formats: ["iife"],
         fileName: (_) => "main.js",
@@ -38,7 +38,7 @@ export default defineConfig(({ mode }) => {
       target: "es2015",
       emptyOutDir: true,
       rollupOptions: {
-        input: path.resolve(__dirname, `atoms/${mode}/main.js`),
+        input: path.resolve(__dirname, `atoms/${mode}/app.js`),
         output: {
           dir: path.resolve(__dirname, `build/${mode}`),
         },
