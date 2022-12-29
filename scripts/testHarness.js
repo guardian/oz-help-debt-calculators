@@ -20,6 +20,8 @@ export function testHarness(options = {}) {
                 const url = decodeURI(req.url);
                 const path = normalizePath(url);
 
+                // console.log('request path', path);
+
                 if (path === '/' || path.startsWith('/atoms/')) {
                     let html = await plugin.load(path)
                     const transformed = await plugin.transform(html, path);
@@ -32,10 +34,14 @@ export function testHarness(options = {}) {
         },
 
         async load(id) {
+            let match;
+
             if (id === '/') {
                 return readFile('./harness/index.html', 'utf8');
-            } else if (id.startsWith('/atoms/')) {
-                return readFile('./harness/dcr-interactive__immersive.html', 'utf8');
+            } else if (id.match(/^\/atoms\/[^\/]+\/$/)) { // match '/atoms/{atom}/'
+                return readFile('./harness/templates.html', 'utf8');
+            } else if (match = id.match(/^\/atoms\/[^\/]+\/([^\/]+)\/$/)) { // match '/atoms/{atom}/{template}/'
+                return readFile(`./harness/templates/${match[1]}.html`, 'utf8');
             }
 
             return null;
@@ -47,7 +53,7 @@ export function testHarness(options = {}) {
                 return _.template(code)({
                     atoms: atomDirectories,
                 });
-            } else if (id.startsWith('/atoms/')) {
+            } else if (id.match(/^\/atoms\/[^\/]+\/[^\/]+\/$/m)) {
                 const atom = resolveAtom(id);
 
                 return _.template(code)({
@@ -56,7 +62,6 @@ export function testHarness(options = {}) {
                     standfirst: config.placeholders.standfirst,
                     paragraphStyle: config.placeholders.paragraphBefore ? 'display: block;' : 'display: none;',
                     paragraphBefore: config.placeholders.paragraphBefore,
-                    stylesheet: './style.css',
                     html: config.html,
                     js: path.join(root, atom, 'main.js'),
                 })
