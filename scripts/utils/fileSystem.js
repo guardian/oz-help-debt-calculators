@@ -13,7 +13,7 @@ export async function listFiles(dirPath, params = {}) {
     for (let file of files) {
         let filePath = path.join(dirPath, file.name);
         if (file.isDirectory()) {
-            let subFiles = await listFiles(filePath);
+            let subFiles = await listFiles(filePath, params);
             output = [...output, ...subFiles];
         } else {
             output.push(filePath)
@@ -22,7 +22,7 @@ export async function listFiles(dirPath, params = {}) {
   
     if (params.filter) {
         output = output.filter(file => {
-            return path.basename(file) !== params.filter;
+            return !params.filter.includes(path.basename(file))
         })
     }
 

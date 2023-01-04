@@ -1,19 +1,13 @@
 <script>
   import Component from "./Component.svelte";
   import Shared from "$lib/components/Shared.svelte";
-  import guardianLogoUrl from "$assets/guardian-logo.svg"
-
 </script>
 
 <div class="atom">
   <p>Guardian logo</p>
-  <img
-    src={guardianLogoUrl}
-    alt="Guardian frontpage"
-  />
 
   <img
-    src="../assets/guardian-logo.svg"
+    src="__assetsPath__/guardian-logo.svg"
     alt="Guardian frontpage"
   />
 

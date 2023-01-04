@@ -25,6 +25,7 @@
     "@sveltejs/vite-plugin-svelte": "^2.0.2",
     "autoprefixer": "^10.4.7",
     "aws-sdk": "^2.1272.0",
+    "es-main": "^1.2.0",
     "lodash": "^4.17.21",
     "mime-types": "^2.1.35",
     "ora": "^6.1.2",

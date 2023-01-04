@@ -11,6 +11,7 @@ const version = `v/${Date.now()}`;
 const s3Path = `atoms/${config.path}`;
 const buildPath = path.resolve('build');
 const atomsPath = path.resolve('src/atoms');
+const localAssetsPath = path.resolve('src/assets');
 
 const spinner = ora();
 
@@ -34,7 +35,8 @@ deploy().catch(error => {
 async function deploy() {    
     await buildAtoms(assetsPath);
 
-    return;
+    // print empty line
+    console.log('');
 
     await deployAssets();
 
@@ -47,12 +49,13 @@ async function deploy() {
 async function deployAssets() {
     spinner.start('Deploying assets')
 
-    let paths = await listFiles('assets', { filter: '.DS_Store' });
+    let paths = await listFiles(localAssetsPath, { filter: ['.DS_Store', '.gitkeep'] });
 
     for (let filePath of paths) {
         const body = fs.createReadStream(filePath);
-        const relativePath = path.relative('assets', filePath);
+        const relativePath = path.relative(localAssetsPath, filePath);
         const key = path.join(s3Path, 'assets', version, relativePath);
+
         await upload(body, key);
     }
 
