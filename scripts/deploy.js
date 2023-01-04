@@ -5,20 +5,20 @@ import path from 'path';
 import ora from 'ora';
 import fs from 'fs';
 import { lookup } from 'mime-types';
+import { buildAtoms } from './build.js';
 
 const version = `v/${Date.now()}`;
 const s3Path = `atoms/${config.path}`;
 const buildPath = path.resolve('build');
 const atomsPath = path.resolve('src/atoms');
 
-const spinner = ora()
+const spinner = ora();
 
 const s3 = new AWS.S3();
 const bucketName = 'gdn-cdn';
 
 const cdnUrl = 'https://interactive.guim.co.uk';
 const assetsPath = `${cdnUrl}/${s3Path}/assets/${version}`;
-process.env.ATOM_ASSETS_PATH = assetsPath;
 
 deploy().catch(error => {
     if (error.name === "InvalidToken") {
@@ -31,7 +31,11 @@ deploy().catch(error => {
     }
 });
 
-async function deploy() {
+async function deploy() {    
+    await buildAtoms(assetsPath);
+
+    return;
+
     await deployAssets();
 
     const atoms = await listDirectories(atomsPath);

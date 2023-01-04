@@ -1,34 +1,31 @@
 <script>
-	import Component from "./Component.svelte";
-	import Shared from "$lib/components/Shared.svelte";
+  import Component from "./Component.svelte";
+  import Shared from "$lib/components/Shared.svelte";
+  import guardianLogoUrl from "$assets/guardian-logo.svg"
 
-	let count = 0;
-
-	function increment() {
-		count += 1;
-	}
 </script>
 
 <div class="atom">
-	<h1>Welcome to the Atom template. Start creating your project in Atom.svelte.</h1>
+  <p>Guardian logo</p>
+  <img
+    src={guardianLogoUrl}
+    alt="Guardian frontpage"
+  />
 
-	<p>Count: {count}</p>
+  <img
+    src="../assets/guardian-logo.svg"
+    alt="Guardian frontpage"
+  />
 
-	<button on:click={increment} >Increment</button>
+  <Shared></Shared>
+  <Component></Component>
 </div>
 
 <style lang="scss">
-	.atom {
-		background-color: #CCC;
-
-		h1 {
-			@include f-headline();
-			font-size: 30px;
-			font-weight: bold;
-
-			@include mq($until: tablet) {
-				font-size: 20px;
-			}
-		}
-	}
+  p {
+    @include f-headline();
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
 </style>

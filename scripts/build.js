@@ -5,7 +5,7 @@ import { listDirectories } from './utils/fileSystem.js';
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 
-;(async () => {
+export async function buildAtoms(base = "/assets") {
     const atoms = await listDirectories(path.resolve(__dirname, '../src/atoms'));
 
     for (const atomName of atoms) {
@@ -16,6 +16,7 @@ const __dirname = fileURLToPath(new URL('.', import.meta.url));
         }
 
         const configFile = await loadConfigFromFile(configEnv, path.resolve(__dirname, '../vite.config.js'));
+        // configFile.config.base = base;
         await build(configFile.config);
     }
-})()
+}
