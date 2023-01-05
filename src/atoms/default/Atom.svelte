@@ -1,22 +1,14 @@
-<script>
-  import Component from "./Component.svelte";
-  import Shared from "$lib/components/Shared.svelte";
-</script>
-
 <div class="atom">
-  <p>Guardian logo</p>
+  <h2>Guardian logo</h2>
 
   <img
     src="__assetsPath__/guardian-logo.svg"
     alt="Guardian frontpage"
   />
-
-  <Shared></Shared>
-  <Component></Component>
 </div>
 
 <style lang="scss">
-  p {
+  h2 {
     @include f-headline();
     font-size: 20px;
     font-weight: bold;
