@@ -1,5 +1,5 @@
 {
-  "name": "svelte-app",
+  "name": "svelte-atom-template",
   "version": "1.0.0",
   "private": true,
   "type": "module",
@@ -10,18 +10,10 @@
     "deploy": "node scripts/deploy.js",
     "deploylog": "node scripts/deploylog.js",
     "deploylog:preview": "node scripts/deploylog.js --preview",
-    "start": "sirv build/default --no-clear"
+    "start": "vite"
   },
   "devDependencies": {
-    "@babel/preset-env": "^7.20.2",
-    "@rollup/plugin-alias": "^4.0.2",
-    "@rollup/plugin-babel": "^6.0.3",
-    "@rollup/plugin-commonjs": "^17.0.0",
-    "@rollup/plugin-html": "^0.2.4",
-    "@rollup/plugin-json": "^5.0.2",
-    "@rollup/plugin-node-resolve": "^11.0.0",
     "@rollup/plugin-replace": "^4.0.0",
-    "@rollup/plugin-strip": "^2.1.0",
     "@sveltejs/vite-plugin-svelte": "^2.0.2",
     "autoprefixer": "^10.4.7",
     "aws-sdk": "^2.1272.0",
@@ -31,12 +23,6 @@
     "ora": "^6.1.2",
     "postcss": "^8.4.13",
     "rollup": "^2.3.4",
-    "rollup-plugin-css-only": "^3.1.0",
-    "rollup-plugin-livereload": "^2.0.0",
-    "rollup-plugin-polyfill-node": "^0.11.0",
-    "rollup-plugin-string": "^3.0.0",
-    "rollup-plugin-svelte": "^7.0.0",
-    "rollup-plugin-terser": "^7.0.0",
     "sass": "^1.51.0",
     "sass-mq": "^6.0.0",
     "svelte": "^3.0.0",
@@ -44,8 +30,5 @@
     "vite": "^4.0.3",
     "vite-plugin-inspect": "^0.7.11",
     "vite-plugin-static-copy": "^0.13.0"
-  },
-  "dependencies": {
-    "sirv-cli": "^2.0.0"
   }
 }
