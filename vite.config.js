@@ -18,6 +18,11 @@ export default defineConfig(({ mode }) => {
         '$assets': path.resolve(__dirname, "src/assets"),
       },
     },
+    esbuild: {
+      // remove console.log and debugger statements from production builds
+      drop: ["debugger"],
+      pure: ["console.log", "console.error", "console.warn", "console.debug", "console.trace"],
+    },
     css: {
       postcss: {
         plugins: [autoprefixer()],
