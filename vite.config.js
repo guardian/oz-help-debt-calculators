@@ -41,10 +41,8 @@ export default defineConfig(({ mode }) => {
         configFile: path.resolve(__dirname, "svelte.config.js"),
       }),
 
-      // TODO: only run on serve
       testHarness(),
 
-      // TODO: only run on build
       viteStaticCopy({
         targets: [
           {
