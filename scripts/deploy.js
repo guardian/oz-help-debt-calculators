@@ -118,7 +118,7 @@ function filesToDeploy(atomName) {
     `;
     
     return [{
-        path: pathForFile('main.js'),
+        path: pathForFile('app.js'),
         key: versionedKeyForFile('app.js')
     }, 
     {

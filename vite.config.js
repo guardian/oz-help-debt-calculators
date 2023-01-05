@@ -64,7 +64,7 @@ export default defineConfig(({ mode }) => {
         entry: path.resolve(__dirname, `src/atoms/${mode}/app.js`),
         name: "atom",
         formats: ["iife"],
-        fileName: (_) => "main.js",
+        fileName: (_) => "app.js",
       },
       target: "es2015",
       emptyOutDir: true,
