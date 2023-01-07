@@ -6,6 +6,7 @@ import autoprefixer from "autoprefixer";
 import { viteStaticCopy } from 'vite-plugin-static-copy';
 import replace from '@rollup/plugin-replace';
 import { testHarness } from "./scripts/testHarness.js";
+import { prerender } from "./scripts/prerender.js";
 
 const assetsPath = process.env.ATOM_ASSETS_PATH || "";
 
@@ -43,12 +44,11 @@ export default defineConfig(({ mode }) => {
 
       testHarness(),
 
+      // generate prerendered HTML
+      prerender(),
+
       viteStaticCopy({
         targets: [
-          {
-            src: path.resolve(__dirname, `src/atoms/${mode}/main.html`),
-            dest: path.resolve(__dirname, `build/${mode}`)
-          },
           {
             src: path.resolve(__dirname, 'src/assets/**/*'),
             dest: path.resolve(__dirname, `build/assets`)

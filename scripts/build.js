@@ -22,6 +22,7 @@ export async function buildAtoms(assetsPath = "") {
         }
 
         process.env.ATOM_ASSETS_PATH = assetsPath;
+        process.env.ATOM_NAME = atomName;
 
         const configFile = await loadConfigFromFile(configEnv, path.resolve(__dirname, '../vite.config.js'));
         await build(configFile.config);

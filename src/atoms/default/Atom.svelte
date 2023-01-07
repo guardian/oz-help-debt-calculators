@@ -1,10 +1,9 @@
-<div class="atom">
-  <h2>Guardian logo</h2>
+<script>
+  export let name = "atom";
+</script>
 
-  <img
-    src="__assetsPath__/guardian-logo.svg"
-    alt="Guardian frontpage"
-  />
+<div class="atom">
+  <h2>Hello {name}</h2>
 </div>
 
 <style lang="scss">

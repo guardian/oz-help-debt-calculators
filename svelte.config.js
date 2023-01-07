@@ -12,4 +12,7 @@ export default {
             prependData: `@import "${libPath}/styles/mq.scss"; @import "${libPath}/styles/fonts.scss";`,
         },
     }),
+    compilerOptions: {
+        hydratable: true,
+    },
 };
