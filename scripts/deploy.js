@@ -110,7 +110,6 @@ function filesToDeploy(atomName) {
         return path.join(s3Path, atomName, fileName)
     }
 
-    // TODO: create main.js in project structure
     const mainJS = `
         var el = document.createElement('script');
         el.src = '${cdnUrl}/${s3Path}/${atomName}/${version}/app.js';
