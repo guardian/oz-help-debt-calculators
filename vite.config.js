@@ -45,6 +45,8 @@ export default defineConfig(({ mode }) => {
       testHarness(),
 
       // generate prerendered HTML
+      // NOTE: Only works when you don't reference 'document' or 'window' in Svelte components.
+      // If you really need to use either of those, disable prerendering here.
       prerender(),
 
       viteStaticCopy({
