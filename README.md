@@ -38,7 +38,7 @@ Builds will be placed in the `/build` directory.
 
 Fill out `project.config.js`:
 
-```
+```js
 {
     "title": "Title of your interactive",
     "path": "year/month/unique-title"
@@ -59,4 +59,48 @@ To verify that deploy was picked up sucessfully:
 
 ```
 npm run deploylog
+```
+
+## Project structure
+
+The files that make up your interactive atom live in the `/src` directory. This is what a typical src directory looks like:
+
+* `/assets`
+* `/atoms`
+* `/lib`
+
+### Assets
+The recommended place for putting any static assets (Images, JSON, etc.). These assets are shared between atoms and can be referenced using `__assetsPath__`. For example:
+
+```html
+<img src="__assetsPath__/guardian-logo.svg" alt="Guardian logo"/>
+```
+The __assetsPath__ string is automatically replaced with the correct path when running the dev server or building for production.  
+
+### Atoms
+Each directory in the `/atoms` folder represents a single interactive atom. To create a new atom, duplicate an existing atom and give it a descriptive name.
+
+When embedding multiple atoms on the same Composer page, make sure you use unique CSS IDs for each atom in their respective `main.html` files.
+
+```html
+<div id="some-unique-id">
+    {{ svelte }}
+</div>
+```
+
+You will need to change this ID in `app.js` too.
+
+```js
+const app = new Atom({
+    target: document.getElementById('some-unique-id'),
+    hydrate: true,
+    props: {},
+});
+```
+
+### Lib
+Source files that are shared by multiple atoms should be placed in the `/lib` folder. These files should be referenced using the `$lib` import alias. For example:
+
+```js
+import SharedComponent from "$lib/components/SharedComponent.svelte";
 ```
