@@ -1,33 +1,57 @@
-### Running locally
+[![stability-beta](https://img.shields.io/badge/stability-beta-33bbff.svg)](https://github.com/mkenney/software-guides/blob/master/STABILITY-BADGES.md#beta)
 
-Please run on node 16: `nvm install 16` `nvm use 16`
+## What is this?
 
-Make sure you are using the correct version of node with NVM: run `nvm use` in the root of the repo. 
-If you don't have nvm installed, add it: `brew install nvm`.
+This is an opinionated template for creating interactive atoms. It uses [Vite](https://vitejs.dev/) in combination with [Rollup](https://rollupjs.org/guide/en/) for a smooth development experience and fast builds.
 
-Install node modules: `npm i`
+* 💡 Instant local dev server start (no bundling required)
+* ⚡️ Instant visual feedback through [Hot Module Replacement (HMR)](https://vitejs.dev/guide/features.html#hot-module-replacement)
+* 🔧 Built-in support for [Svelte](https://svelte.dev/)
+* 📝 Prerendering enabled by default
+* 📦 Effortless deployment
 
-To run locally: `npm run dev`.
 
-### Deploying
+## How to use the template
 
-To deploy to the Interactives S3 bucket you need AWS credentials for the Interactives account in your command line. You can get these from the Guardian's permissions manager system [Janus](https://janus.gutools.co.uk/). You need to be assigned these permissions and be on a Guardian network or VPN to see them on Janus. 
+### Prequisites
+The template is compatible with Node 16+. You can install new versions of node using [NVM](https://github.com/nvm-sh/nvm#installing-and-updating). 
 
-Fill out config.json:
+### Getting started
+
+1. Click the "Use this template" button on this page to create a new repository.
+2. Clone the repo 
+3. Install dependencies: `npm install`
+
+To start the dev server:
+```
+npm run dev
+```
+
+To build for production:
+```
+npm run build
+```
+
+Builds will be placed in the `/build` directory.
+
+### Deployment
+
+Fill out `project.config.js`:
 
 ```
 {
     "title": "Title of your interactive",
-    "docData": "Any associated external data",
     "path": "year/month/unique-title"
 }
 ```
 
-Deploy to S3:
+To deploy to the Interactives S3 bucket you need AWS credentials for the Interactives account in your command line. You can get these from the Guardian's permissions manager system [Janus](https://janus.gutools.co.uk/). You need to be assigned these permissions and be on a Guardian network or VPN to see them on Janus. 
 
+After installing the credentials:
 ```
 npm run deploy
 ```
+
 Running this task will output the url to be embedded in Composer.
 
 
