@@ -13,7 +13,7 @@ This is an opinionated template for creating interactive atoms. It uses [Vite](h
 
 ## How to use the template
 
-### Prequisites
+### Prerequisites
 The template is compatible with Node 16+. You can install new versions of node using [NVM](https://github.com/nvm-sh/nvm#installing-and-updating). 
 
 ### Getting started
