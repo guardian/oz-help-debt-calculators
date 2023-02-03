@@ -141,6 +141,6 @@ import Atom from './components/Atom';
 
 export function render() {
     const html = renderToString(<Atom />);
-	return mainHTML.replace("{{ preact }}", html);
+    return mainHTML.replace("{{ preact }}", html);
 }
 ```
