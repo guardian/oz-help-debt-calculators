@@ -1,4 +1,4 @@
-import Atom from './Atom.svelte';
+import Atom from './components/Atom.svelte';
 import mainHTML from './main.html?raw';
 
 export function render() {

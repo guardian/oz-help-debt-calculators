@@ -1,5 +1,5 @@
 import './styles/main.scss';
-import Atom from './Atom.svelte';
+import Atom from './components/Atom.svelte';
 
 // enable this when creating an atom for the article template
 // import '$lib/helpers/resizeFrame';
