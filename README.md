@@ -104,3 +104,43 @@ Source files that are shared by multiple atoms should be placed in the `/lib` fo
 ```js
 import SharedComponent from "$lib/components/SharedComponent.svelte";
 ```
+
+## Preact support
+
+The template can be easily configured to support atoms using [Preact](https://preactjs.com/).
+
+1. Install Preact plugin for Vite: `npm i --save-dev @preact/preset-vite`
+2. Import plugin in `vite.config.js`: `import preact from "@preact/preset-vite";`
+3. Enable the plugin: 
+
+```js
+...
+    svelte(),
+
+    // Uncomment this line
+    // preact(),
+...
+```
+
+The `app.js` remains the entry point for the atom. Here's an example of what it would look like when using Preact:
+
+```js
+import './styles/main.scss';
+import { render } from 'preact';
+import Atom from './components/Atom';
+
+render(<Atom />, document.getElementById("gv-atom"));
+```
+
+And here's an example of what `app.prerender.js` should look like:
+
+```js
+import renderToString from 'preact-render-to-string';
+import mainHTML from './main.html?raw';
+import Atom from './components/Atom';
+
+export function render() {
+    const html = renderToString(<Atom />);
+	return mainHTML.replace("{{ preact }}", html);
+}
+```

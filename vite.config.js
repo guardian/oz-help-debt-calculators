@@ -7,6 +7,7 @@ import { viteStaticCopy } from 'vite-plugin-static-copy';
 import replace from '@rollup/plugin-replace';
 import { testHarness } from "./scripts/testHarness.js";
 import { prerender } from "./scripts/prerender.js";
+// import preact from "@preact/preset-vite";
 
 const assetsPath = process.env.ATOM_ASSETS_PATH || "";
 
@@ -41,6 +42,11 @@ export default defineConfig(({ mode }) => {
       svelte({
         configFile: path.resolve(__dirname, "svelte.config.js"),
       }),
+
+      // Enable this plugin for preact support.
+      // You also need to install: @preact/preset-vite and uncomment the import statement at the top of this file.
+      // See README for more info.
+      // preact(),
 
       testHarness(),
 
