@@ -107,20 +107,7 @@ import SharedComponent from "$lib/components/SharedComponent.svelte";
 
 ## Preact support
 
-The template can be easily configured to support atoms using [Preact](https://preactjs.com/).
-
-1. Install Preact plugin for Vite: `npm i --save-dev @preact/preset-vite`
-2. Import plugin in `vite.config.js`: `import preact from "@preact/preset-vite";`
-3. Enable the plugin: 
-
-```js
-...
-    svelte(),
-
-    // Uncomment this line
-    // preact(),
-...
-```
+[Preact](https://preactjs.com/) support is enabled by default. It relies on the Preact plugin for Vite (`@preact/preset-vite`) in `vite.config.js`
 
 The `app.js` remains the entry point for the atom. Here's an example of what it would look like when using Preact:
 

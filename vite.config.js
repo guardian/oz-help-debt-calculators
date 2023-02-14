@@ -43,9 +43,6 @@ export default defineConfig(({ mode }) => {
         configFile: path.resolve(__dirname, "svelte.config.js"),
       }),
 
-      // Enable this plugin for preact support.
-      // You also need to install: @preact/preset-vite and uncomment the import statement at the top of this file.
-      // See README for more info.
       preact(),
 
       testHarness(),
