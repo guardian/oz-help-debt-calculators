@@ -6,5 +6,5 @@ export function render() {
 		name: 'prerendered atom',
 	});
 
-	return mainHTML.replace("{{ svelte }}", html);
+	return mainHTML.replace("{{ html }}", html);
 }

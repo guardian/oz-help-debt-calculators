@@ -84,7 +84,7 @@ When embedding multiple atoms on the same Composer page, make sure you use uniqu
 
 ```html
 <div id="some-unique-id">
-    {{ svelte }}
+    {{ html }}
 </div>
 ```
 
@@ -107,20 +107,7 @@ import SharedComponent from "$lib/components/SharedComponent.svelte";
 
 ## Preact support
 
-The template can be easily configured to support atoms using [Preact](https://preactjs.com/).
-
-1. Install Preact plugin for Vite: `npm i --save-dev @preact/preset-vite`
-2. Import plugin in `vite.config.js`: `import preact from "@preact/preset-vite";`
-3. Enable the plugin: 
-
-```js
-...
-    svelte(),
-
-    // Uncomment this line
-    // preact(),
-...
-```
+[Preact](https://preactjs.com/) support is enabled by default. It relies on the Preact plugin for Vite (`@preact/preset-vite`) in `vite.config.js`
 
 The `app.js` remains the entry point for the atom. Here's an example of what it would look like when using Preact:
 
@@ -141,6 +128,6 @@ import Atom from './components/Atom';
 
 export function render() {
     const html = renderToString(<Atom />);
-    return mainHTML.replace("{{ preact }}", html);
+    return mainHTML.replace("{{ html }}", html);
 }
 ```
