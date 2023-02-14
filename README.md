@@ -84,7 +84,7 @@ When embedding multiple atoms on the same Composer page, make sure you use uniqu
 
 ```html
 <div id="some-unique-id">
-    {{ svelte }}
+    {{ html }}
 </div>
 ```
 
@@ -141,6 +141,6 @@ import Atom from './components/Atom';
 
 export function render() {
     const html = renderToString(<Atom />);
-    return mainHTML.replace("{{ preact }}", html);
+    return mainHTML.replace("{{ html }}", html);
 }
 ```
