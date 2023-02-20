@@ -24,13 +24,20 @@ export function testHarness(options = {}) {
                 // console.log('request path', path);
 
                 if (path === '/' || path.startsWith('/atoms/')) {
-                    let html = await plugin.load(path)
-                    if (!html) {
+
+                    let template = await plugin.load(path);
+                    if (!template) {
                         console.log('Could not find html for path', path);
                         return next();
                     }
-                    const transformed = await plugin.transform(html, path);
-                    const result = await server.transformIndexHtml(url, transformed);
+
+                    let mainHTML = await loadMainHTML(path, server);
+                    if (mainHTML) {
+                        mainHTML = await server.transformIndexHtml('/', mainHTML);
+                    }
+
+                    // Apply lodash templating
+                    const result = await plugin.transformTemplateHTML(template, mainHTML, path);           
                     res.end(result);
                 } else {
                     return next();
@@ -48,21 +55,19 @@ export function testHarness(options = {}) {
             } else if (match = id.match(/^\/atoms\/[^\/]+\/([^\/]+)\/$/)) { // match '/atoms/{atom}/{template}/'
                 return readFile(`./harness/templates/${match[1]}.html`, 'utf8');
             }
-
             return null;
         },
 
-        async transform(code, id) {
+        async transformTemplateHTML(templateHTML, mainHTML, id) {
             if (id === '/') {
                 const atomDirectories = await listDirectories(root);
-                return _.template(code)({
+                return _.template(templateHTML)({
                     atoms: atomDirectories,
                 });
             } else if (id.match(/^\/atoms\/[^\/]+\/[^\/]+\/$/)) {
                 const atom = resolveAtom(id);
-                const mainHTML = await readFile(path.join(root, atom, 'main.html'), 'utf8');
-
-                return _.template(code)({
+        
+                return _.template(templateHTML)({
                     title: config.title,
                     headline: config.placeholders.headline,
                     standfirst: config.placeholders.standfirst,
@@ -72,9 +77,9 @@ export function testHarness(options = {}) {
                     js: path.join(root, atom, 'app.js'),
                 })
             }
-
-            return code;
-        },
+        
+            return templateHTML;
+        }
     };
 
     return plugin;
@@ -89,3 +94,12 @@ function resolveAtom(id) {
     return null;
 }
 
+async function loadMainHTML(id, server) {
+    const atomName = resolveAtom(id);
+    if (atomName) {
+        const { render } = await server.ssrLoadModule(path.join(atomName, 'app.prerender.js'))
+        return render();
+    }
+
+    return null;
+}
