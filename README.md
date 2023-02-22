@@ -6,7 +6,7 @@ This is an opinionated template for creating interactive atoms. It uses [Vite](h
 
 * 💡 Instant local dev server start (no bundling required)
 * ⚡️ Instant visual feedback through [Hot Module Replacement (HMR)](https://vitejs.dev/guide/features.html#hot-module-replacement)
-* 🔧 Built-in support for [Svelte](https://svelte.dev/)
+* 🔧 Built-in support for [Svelte](https://svelte.dev/) and [Preact](https://preactjs.com/)
 * 📝 Prerendering enabled by default
 * 📦 Effortless deployment
 
