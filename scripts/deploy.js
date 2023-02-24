@@ -6,6 +6,16 @@ import ora from 'ora';
 import fs from 'fs';
 import { lookup } from 'mime-types';
 import { buildAtoms } from './build.js';
+import { exit } from 'process';
+
+const args = process.argv.slice(2);
+const live = (args[0] && args[0] === '--live') || false;
+const preview = (args[0] && args[0] === '--preview') || false;
+
+if (!live && !preview) {
+    console.error("The command 'npm run deploy' is deprecated. Please use 'npm run deploy:preview', or 'npm run deploy:live'")
+    exit();
+}
 
 const version = `v/${Date.now()}`;
 const s3Path = `atoms/${config.path}`;
@@ -116,7 +126,7 @@ function filesToDeploy(atomName) {
         document.body.appendChild(el);
     `;
     
-    return [{
+    const files = [{
         path: pathForFile('app.js'),
         key: versionedKeyForFile('app.js')
     }, 
@@ -140,17 +150,22 @@ function filesToDeploy(atomName) {
         },
     },
     {
-        body: version,
-        key: keyForFile('live'),
-        params: {
-            CacheControl: 'max-age=30'
-        },
-    }, 
-    {
         body: JSON.stringify(config),
         key: keyForFile('config.json'),
         params: {
             CacheControl: 'max-age=30'
         },
-    }]
+    }];
+
+    if (live) {
+        files.push({
+            body: version,
+            key: keyForFile('live'),
+            params: {
+                CacheControl: 'max-age=30'
+            },
+        })
+    }
+
+    return files;
 }
