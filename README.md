@@ -47,18 +47,27 @@ Fill out `project.config.js`:
 
 To deploy to the Interactives S3 bucket you need AWS credentials for the Interactives account in your command line. You can get these from the Guardian's permissions manager system [Janus](https://janus.gutools.co.uk/). You need to be assigned these permissions and be on a Guardian network or VPN to see them on Janus. 
 
-After installing the credentials:
+By default you'll want to run this command:
 ```
-npm run deploy
+npm run deploy:live
 ```
 
-Running this task will output the url to be embedded in Composer.
+But __if you're making changes to an atom that has already been published__, it is advisable to use:
+```
+npm run deploy:preview
+```
 
+This will make the changes visible in composer preview, but not on the live page, allowing the atom to be tested before being published to the live page.
+
+Running the deploy task will output the url to be embedded in Composer.
 
 To verify that deploy was picked up sucessfully:
-
 ```
-npm run deploylog
+npm run deploylog:live
+```
+Or:
+```
+npm run deploylog:preview
 ```
 
 ## Project structure
