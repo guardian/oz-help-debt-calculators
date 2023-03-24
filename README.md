@@ -140,3 +140,7 @@ export function render() {
     return mainHTML.replace("{{ html }}", html);
 }
 ```
+
+## Supported browsers 
+
+A list of browsers that the guardian supports can be found here: [https://www.theguardian.com/help/recommended-browsers](https://www.theguardian.com/help/recommended-browsers)
