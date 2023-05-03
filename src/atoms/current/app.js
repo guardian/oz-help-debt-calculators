@@ -9,7 +9,7 @@ import '$lib/helpers/scrollbarWidth';
 
 
 const app = new Atom({
-	target: document.getElementById('gv-atom'),
+	target: document.getElementById('hecs-current'),
 	hydrate: true,
 	props: {},
 });
