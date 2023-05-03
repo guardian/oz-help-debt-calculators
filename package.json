@@ -19,7 +19,7 @@
     "@rollup/plugin-replace": "^4.0.0",
     "@sveltejs/vite-plugin-svelte": "^2.0.2",
     "autoprefixer": "^10.4.7",
-    "aws-sdk": "^2.1272.0",
+    "aws-sdk": "^2.1370.0",
     "es-main": "^1.2.0",
     "lodash": "^4.17.21",
     "mime-types": "^2.1.35",
