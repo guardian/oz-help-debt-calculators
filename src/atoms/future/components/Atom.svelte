@@ -2,8 +2,8 @@
   <div id="outer-wrapper" class="showcase">
     <div class="row">
 
-    <div class='figureTitle' id="chartTitle">How your Help debt will change in 2023, and how long you might be paying it off</div>
-    <div class='subTitle' id="subTitle">Put in your current Help debt and your annual income to see how much indexation will add to your debt in June 2023.
+    <div class='figureTitle' id="chartTitle">How long could it take you to pay off your Help/Hecs debt?</div>
+    <div class='subTitle' id="subTitle">Put in your current Help debt and your annual income to get a rough estimate of how long it could take you to pay off your debt.
       The chart shows the <span class="red">money added from indexation each year</span>, <span class="blue">compulsory and voluntary repayments each year</span>, and then the <span class="orange">total debt over time</span>.
       This model assumes wage growth increases steeply after graduation, then tapers downwards over nine years to the historical average wage growth. You can also change the average indexation rate, or the average rate of wage growth, or leave them as they are </div>
     <div class='notes' id='chartKey'>
@@ -26,7 +26,7 @@
       </div>
 
       <div  class="controlBlock">
-        Average indexation (inflation)**:  <input type="number" min="0.1" max="10" step="0.1" bind:value={starting_indexation}>
+        Average indexation (CPI/WPI)***:  <input type="number" min="0.1" max="10" step="0.1" bind:value={starting_indexation}>
       </div>
 
       <div  class="controlBlock">
@@ -38,7 +38,7 @@
     
     </div>
     <div class="message">
-      Indexation will add <span class="red">${Math.round(0.07 * starting_debt)}</span> to your Help debt in 2023
+      Indexation will add <span class="red">${Math.round(0.04 * starting_debt)}</span> to your Help debt in 2024
     </div>
     <div class="row borderBottom chartSans" id="graphicContainer">
         <div id="loadingContainer">Loading...</div>
@@ -60,7 +60,7 @@
 
       </div>	
       
-      <span id="footnote"></span> Guardian graphic <span id="sourceText"> | * Income and voluntary payments are adjusted each year by the average wage growth amount. ** Assumes wage growth post-graduation increases sharply then tapers downwards over the following years, using figures based on the <a href="https://www.qilt.edu.au/general/article/2021/11/04/graduate-incomes-data">QILT Graduate incomes data report</a>. *** Help debt and repayment thresholds are re-indexed yearly using a formula based on the consumer price index (inflation) </span>
+      <span id="footnote"></span> Guardian graphic <span id="sourceText"> | * Income and voluntary payments are adjusted each year by the average wage growth amount. ** Assumes wage growth post-graduation increases sharply then tapers downwards over the following years, using figures based on the <a href="https://www.qilt.edu.au/general/article/2021/11/04/graduate-incomes-data">QILT Graduate incomes data report</a>. *** Help debt and repayment thresholds are re-indexed yearly using a formula based on whichever is lower of the consumer price index (inflation) and the wage price index</span>
     </div>	
     
 </div>
@@ -168,7 +168,11 @@
         let repayment_rate = starting_thresholds.filter(r => salary < r.bracket)[0].rate
         console.log()
         let repayment = repayment_rate * salary
-        let indexation_rate = 0.07
+        if (grad_year == 2023) {
+          repayment = 0
+        }
+        
+        let indexation_rate = 0.032
         let indexation = indexation_rate * (starting_debt - starting_voluntary_repayment)
         let help_debt = starting_debt + indexation - repayment - starting_voluntary_repayment
         let thresholds = starting_thresholds
@@ -188,6 +192,7 @@
         model.push(newRow)
       }
 
+      
       else {
 
         let year = model[i-1].year + 1
@@ -211,6 +216,13 @@
         let repayment = repayment_rate * salary
         let voluntary_repayments = model[i-1].voluntary_repayments + (model[i-1].voluntary_repayments * (wage_growth / 100))
         let indexation = (starting_indexation / 100) * (model[i-1].help_debt - voluntary_repayments)
+       
+        // adjust for known 2024 amount
+
+        if (i == 1) {
+          indexation = 0.04 * (model[i-1].help_debt - voluntary_repayments)
+        }
+        
         let help_debt = model[i-1].help_debt + indexation - repayment - voluntary_repayments
         let total_repayments = repayment + voluntary_repayments
         help_debt = help_debt <= 0 ? 0 : help_debt
